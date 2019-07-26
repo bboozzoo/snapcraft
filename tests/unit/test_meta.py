@@ -763,6 +763,8 @@ class CreateMetadataFromSourceBaseTestCase(CreateBaseTestCase):
         }
         # Create metadata file
         open("test-metadata-file", "w").close()
+        # mock platform repo
+        self.useFixture(fixture_setup.FakePlatformRepo())
 
 
 class CreateMetadataFromSourceTestCase(CreateMetadataFromSourceBaseTestCase):
@@ -1995,6 +1997,9 @@ class CommonIdTestCase(CreateBaseTestCase):
 
         self.create_metadata_file("part", "1.metainfo.xml", "test.id.1")
         self.create_metadata_file("part", "2.metainfo.xml", "test.id.2")
+
+        # mock platform repo
+        self.useFixture(fixture_setup.FakePlatformRepo())
 
     def create_metadata_file(self, part, name, common_id):
         # Create metadata files

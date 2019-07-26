@@ -711,3 +711,13 @@ class FakeSnapcraftIsASnap(fixtures.Fixture):
         self.useFixture(fixtures.EnvironmentVariable("SNAP", "/snap/snapcraft/current"))
         self.useFixture(fixtures.EnvironmentVariable("SNAP_NAME", "snapcraft"))
         self.useFixture(fixtures.EnvironmentVariable("SNAP_VERSION", "devel"))
+
+
+class FakePlatformRepo(fixtures.Fixture):
+    def _setUp(self):
+        super()._setUp()
+
+        patcher = mock.patch("snapcraft.internal.repo.Repo", autospec=True)
+        mock_repo = patcher.start()
+        mock_repo.get_installed_packages.return_value = ["foo", "bar"]
+        self.addCleanup(patcher.stop)

@@ -17,7 +17,6 @@
 from typing import TYPE_CHECKING
 
 from . import errors
-from ._lxd import LXD
 from ._multipass import Multipass
 
 if TYPE_CHECKING:
@@ -31,6 +30,10 @@ def get_provider_for(provider_name: str) -> "Type[Provider]":
     if provider_name == "multipass":
         return Multipass
     elif provider_name == "lxd":
-        return LXD
+        try:
+            from ._lxd import LXD
+            return LXD
+        except ImportError:
+            raise errors.ProviderNotSupportedError(provider=provider_name)
     else:
         raise errors.ProviderNotSupportedError(provider=provider_name)

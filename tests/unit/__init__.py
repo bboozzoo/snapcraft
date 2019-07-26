@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import apt
 import logging
 import os
 import stat
@@ -142,18 +141,22 @@ class TestCase(testscenarios.WithScenarios, testtools.TestCase):
         self.fake_logger = fixtures.FakeLogger(level=logging.ERROR)
         self.useFixture(self.fake_logger)
 
-        # Some tests will change the apt Dir::Etc::Trusted and
-        # Dir::Etc::TrustedParts directories. Make sure they're properly reset.
-        self.addCleanup(
-            apt.apt_pkg.config.set,
-            "Dir::Etc::Trusted",
-            apt.apt_pkg.config.find_file("Dir::Etc::Trusted"),
-        )
-        self.addCleanup(
-            apt.apt_pkg.config.set,
-            "Dir::Etc::TrustedParts",
-            apt.apt_pkg.config.find_file("Dir::Etc::TrustedParts"),
-        )
+        try:
+            import apt
+            # Some tests will change the apt Dir::Etc::Trusted and
+            # Dir::Etc::TrustedParts directories. Make sure they're properly reset.
+            self.addCleanup(
+                apt.apt_pkg.config.set,
+                "Dir::Etc::Trusted",
+                apt.apt_pkg.config.find_file("Dir::Etc::Trusted"),
+            )
+            self.addCleanup(
+                apt.apt_pkg.config.set,
+                "Dir::Etc::TrustedParts",
+                apt.apt_pkg.config.find_file("Dir::Etc::TrustedParts"),
+            )
+        except ImportError:
+            pass
 
         patcher = mock.patch("multiprocessing.cpu_count")
         self.cpu_count = patcher.start()

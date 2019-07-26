@@ -18,8 +18,6 @@ import shutil
 import tarfile
 import tempfile
 
-import debian.arfile
-
 from . import errors
 from ._base import FileBase
 
@@ -52,6 +50,10 @@ class Deb(FileBase):
             raise errors.SnapcraftSourceInvalidOptionError("deb", "source-branch")
 
     def provision(self, dst, clean_target=True, keep_deb=False, src=None):
+        try:
+            import debian.arfile
+        except ImportError:
+            raise RuntimeError('cannot provision deb without debian')
         if src:
             deb_file = src
         else:

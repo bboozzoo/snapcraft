@@ -151,6 +151,8 @@ else:
             + recursive_data_files("keyrings", "share/snapcraft")
             + recursive_data_files("extensions", "share/snapcraft")
         ),
-        install_requires=["pysha3", "pyxdg", "requests"],
+        install_requires=["pyxdg", "requests", "requests-unixsocket", "click",
+                          "tabulate", "pymacaroons", "requests_toolbelt",
+                          "progressbar2", "jsonschema", "pyelftools"],
         test_suite="tests.unit",
     )

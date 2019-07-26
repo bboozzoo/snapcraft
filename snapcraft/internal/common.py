@@ -30,15 +30,16 @@ from typing import Callable, List
 
 from snapcraft.internal import errors
 
+_DEFAULT_RESOURCES_PREFIX = os.getenv('SNAPCRAFT_RESOURCES_PREFIX') or sys.prefix
 
 SNAPCRAFT_FILES = ["parts", "stage", "prime"]
-_DEFAULT_PLUGINDIR = os.path.join(sys.prefix, "share", "snapcraft", "plugins")
+_DEFAULT_PLUGINDIR = os.path.join(_DEFAULT_RESOURCES_PREFIX, "share", "snapcraft", "plugins")
 _plugindir = _DEFAULT_PLUGINDIR
-_DEFAULT_SCHEMADIR = os.path.join(sys.prefix, "share", "snapcraft", "schema")
+_DEFAULT_SCHEMADIR = os.path.join(_DEFAULT_RESOURCES_PREFIX, "share", "snapcraft", "schema")
 _schemadir = _DEFAULT_SCHEMADIR
-_DEFAULT_EXTENSIONSDIR = os.path.join(sys.prefix, "share", "snapcraft", "extensions")
+_DEFAULT_EXTENSIONSDIR = os.path.join(_DEFAULT_RESOURCES_PREFIX, "share", "snapcraft", "extensions")
 _extensionsdir = _DEFAULT_EXTENSIONSDIR
-_DEFAULT_KEYRINGSDIR = os.path.join(sys.prefix, "share", "snapcraft", "keyrings")
+_DEFAULT_KEYRINGSDIR = os.path.join(_DEFAULT_RESOURCES_PREFIX, "share", "snapcraft", "keyrings")
 _keyringsdir = _DEFAULT_KEYRINGSDIR
 _DEFAULT_LEGACY_SNAPCRAFT_DIR = os.path.join(sys.prefix, "legacy_snapcraft")
 _legacy_snapcraft_dir = _DEFAULT_LEGACY_SNAPCRAFT_DIR
