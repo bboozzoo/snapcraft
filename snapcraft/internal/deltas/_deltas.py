@@ -154,7 +154,7 @@ class BaseDeltasGenerator:
         count = 0
         ret = proc.poll()
         while ret is None:
-            if count >= progress_indicator.maxval:
+            if count >= progress_indicator.max_value:
                 progress_indicator.start()
                 count = 0
             progress_indicator.update(count)

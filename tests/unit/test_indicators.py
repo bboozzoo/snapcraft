@@ -57,7 +57,7 @@ class ProgressBarInitializationTests(unit.TestCase):
     def test_init_progress_bar_with_length(self, mock_is_dumb_terminal):
         mock_is_dumb_terminal.return_value = self.dumb
         pb = indicators._init_progress_bar(10, "destination", "message")
-        self.assertThat(pb.maxval, Equals(10))
+        self.assertThat(pb.max_value, Equals(10))
         self.assertTrue("message" in pb.widgets)
         pb_widgets_types = [type(w) for w in pb.widgets]
         self.assertTrue(type(progressbar.Percentage()) in pb_widgets_types)
@@ -69,7 +69,7 @@ class ProgressBarInitializationTests(unit.TestCase):
     def test_init_progress_bar_with_unknown_length(self, mock_is_dumb_terminal):
         mock_is_dumb_terminal.return_value = self.dumb
         pb = indicators._init_progress_bar(0, "destination", "message")
-        self.assertThat(pb.maxval, Equals(progressbar.UnknownLength))
+        self.assertThat(pb.max_value, Equals(progressbar.UnknownLength))
         self.assertTrue("message" in pb.widgets)
         pb_widgets_types = [type(w) for w in pb.widgets]
         self.assertThat(
